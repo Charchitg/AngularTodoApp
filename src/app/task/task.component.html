@@ -1,0 +1,87 @@
+
+<h1 class="heading"> Todo App</h1>
+
+<section id="input">
+    <input id="input-form" class="form-control" type="text" placeholder="Add task details" [(ngModel)]='str'>
+    <button type="button" class="btn btn-primary" (click)="add()"> Add Task </button>    
+</section>
+
+<div class="d-flex flex-row justify-content-evenly my-2">
+    <button class="btn btn-outline-primary" (click)="showAllTask()">
+        All Tasks
+    </button>
+    <button class="btn btn-outline-primary" (click)="showActiveTask()">
+        Active Tasks
+    </button>
+    <button class="btn btn-outline-primary" (click)="showCompleteTask()">
+        Completed Tasks
+    </button>
+</div>
+
+
+<div *ngIf='allTask'>
+    <div *ngIf='completed.length > 0 || todo.length > 0; then allTaskList else noData'></div>
+    <ng-template #allTaskList>
+        <h1 class="heading"> All Tasks</h1>
+        <ul>
+            <li *ngFor="let item of todo" class="item d-flex flex-row  border border-success rounded p-1">
+                <p class="blue">{{ item }}</p>
+            </li>
+            <li *ngFor="let item of completed" class="item d-flex flex-row  border border-danger rounded p-1">
+                <p class=" green">{{ item }}</p>
+            </li>
+        </ul>
+    </ng-template>
+
+    <ng-template #noData>
+        <h4 class="h4">The list is empty </h4>
+    </ng-template>
+
+</div>
+
+
+<div *ngIf='activeTask'>
+
+    <div *ngIf="todo.length > 0; then activeTaskList else noData"></div>
+
+    <ng-template #activeTaskList>
+        <h1 class="heading">Todos</h1>
+
+        <ul>
+            <li *ngFor="let item of todo; index as i" class="item d-flex flex-row border border-success rounded p-1">
+                <p class="blue">{{ item }}</p>
+
+                <button class="btn btn-success" (click)="complete(i)">Completed </button>
+            </li>
+        </ul>
+
+    </ng-template>
+
+
+    <ng-template #noData>
+        <h4 class="h4">The list is empty </h4>
+    </ng-template>
+</div>
+
+
+
+
+<div *ngIf='completeTask'>
+
+    <div *ngIf="completed.length > 0;then completeTaskList else noData"></div>
+
+    <ng-template #completeTaskList>
+        <h1 class="heading">Completed</h1>
+        <ul>
+            <li *ngFor="let item of completed ; index as i"
+                class="item d-flex flex-row border border-danger rounded p-1">
+                <p class=" green">{{ item }}</p>
+                <button class="btn btn-danger" (click)="delete(i)">Delete</button>
+            </li>
+        </ul>
+    </ng-template>
+
+    <ng-template #noData>
+        <h4 class="h4">The list is empty </h4>
+    </ng-template>
+</div>
